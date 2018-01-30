@@ -10,7 +10,7 @@ defmodule Gomoku.Markers do
 	def add(%Markers{} = markers, :black, %Coordinate{} = coordinate), do:
 		update_in(markers.black, &MapSet.put(&1, coordinate))
 
-		def add(%Markers{} = markers, :white, %Coordinate{} = coordinate), do:
-			update_in(markers.white, &MapSet.put(&1, coordinate))		
+	def add(%Markers{} = markers, :white, %Coordinate{} = coordinate), do:
+		update_in(markers.white, &MapSet.put(&1, coordinate))
 
 end
