@@ -13,4 +13,7 @@ defmodule Gomoku.Markers do
 	def add(%Markers{} = markers, :white, %Coordinate{} = coordinate), do:
 		update_in(markers.white, &MapSet.put(&1, coordinate))
 
+	def overlaps?(coordinate, new_marker), do:
+		not MapSet.disjoint?(coordinate, new_marker)
+
 end

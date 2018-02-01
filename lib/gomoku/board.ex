@@ -4,20 +4,20 @@ defmodule Gomoku.Board do
 
 	def mark(board, %Coordinate{} = coordinate) do
 		board
-		|> check_markers(coordinate)
+		|> check_markers(board, coordinate)
 		|> guess_response(board)
 	end
 
-	def check_markers(board, key, %Markers{} = marker) do
-		case overlaps_exisiting_marker?(board, key, marker) do
+	def check_markers(board, coordinate, %Markers{} = marker) do
+		case overlaps_exisiting_marker?(board, coordinate, marker) do
 			true -> {:error, :overlapping_marker}
-			false -> {key, marker}
+			false -> {coordinate, marker}
 		end
 	end
 
-	defp overlaps_exisiting_marker?(board, new_key, new_marker) do
-		Enum.any?(board, fn {key, marker} ->
-			key != new_key and Markers.overlaps?(marker, new_marker)
+	defp overlaps_exisiting_marker?(board, coordinate, new_marker) do
+		Enum.any?(board, fn {key, coordinate} ->
+			key != coordinate and Markers.overlaps?(coordinate, new_marker)
 		end)
 	end
 
@@ -28,10 +28,10 @@ defmodule Gomoku.Board do
 
 	defp win_check(board) do
 		board
-		|> row_check(board)
-		|> column_check(board)
-		|> forward_dia_check(board)
-		|> reverse_dia_check(board)
+		|> row_check()
+		|> column_check()
+		|> forward_dia_check()
+		|> reverse_dia_check()
 	end
 
 	defp row_check(board) do
